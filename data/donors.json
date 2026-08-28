@@ -1,0 +1,5 @@
+[
+  { "slug": "italy",           "name": "Italia",                              "iso_code": "IT", "type": "country" },
+  { "slug": "eu-commission",   "name": "Commissione Europea",                 "iso_code": null, "type": "eu_institution" },
+  { "slug": "eu-council-epf",  "name": "Consiglio UE — European Peace Facility", "iso_code": null, "type": "eu_institution" }
+]

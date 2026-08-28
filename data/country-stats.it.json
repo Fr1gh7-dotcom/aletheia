@@ -1,0 +1,39 @@
+{
+  "iso_code": "IT",
+  "note": "Ogni valore ha la fonte accanto. La chiave GNI è approssimata: va rifinita anno per anno dai documenti di bilancio UE / RGS-IGRUE quando disponibili.",
+  "years": [
+    {
+      "year": 2022,
+      "population": 58983122,
+      "employed_labor_force": 23099000,
+      "irpef_taxpayers": 41504798,
+      "eu_gni_key_pct": 12.0,
+      "population_source": "ISTAT, Bilancio demografico — popolazione residente al 1° gennaio 2023 (da riverificare sul comunicato)",
+      "employed_source": "ISTAT, Rilevazione forze di lavoro — occupati media 2022 (da riverificare sul comunicato)",
+      "taxpayers_source": "MEF-DF, Statistiche dichiarazioni IRPEF, anno d'imposta 2021 (dichiarazioni 2022) (da riverificare sul dataset)",
+      "gni_key_source": "Stima: quota Italia risorse proprie bilancio UE ~12% (Commissione UE / RGS-IGRUE)"
+    },
+    {
+      "year": 2023,
+      "population": 58989749,
+      "employed_labor_force": 23580000,
+      "irpef_taxpayers": 41955359,
+      "eu_gni_key_pct": 12.0,
+      "population_source": "ISTAT, Bilancio demografico — popolazione residente al 1° gennaio 2024 (da riverificare sul comunicato)",
+      "employed_source": "ISTAT, Rilevazione forze di lavoro — occupati media 2023 (da riverificare sul comunicato)",
+      "taxpayers_source": "MEF-DF, Statistiche dichiarazioni IRPEF, anno d'imposta 2022 (dichiarazioni 2023) (da riverificare sul dataset)",
+      "gni_key_source": "Stima: quota Italia risorse proprie bilancio UE ~12% (Commissione UE / RGS-IGRUE)"
+    },
+    {
+      "year": 2024,
+      "population": 58934177,
+      "employed_labor_force": 23932000,
+      "irpef_taxpayers": 42500000,
+      "eu_gni_key_pct": 12.0,
+      "population_source": "ISTAT, Bilancio demografico — popolazione residente al 1° gennaio 2025 (dato provvisorio)",
+      "employed_source": "ISTAT, Il mercato del lavoro IV trimestre 2024 (comunicato 13 marzo 2025) — occupati media 2024: 23.932.000",
+      "taxpayers_source": "MEF-DF, Statistiche dichiarazioni IRPEF, anno d'imposta 2023: oltre 42,5 mln di contribuenti (di cui ~9,4 mln acquisiti via Certificazione Unica senza dichiarazione diretta; ~33,1 mln con 730 o Redditi PF)",
+      "gni_key_source": "Stima: quota Italia risorse proprie bilancio UE ~12% (Commissione UE / RGS-IGRUE)"
+    }
+  ]
+}

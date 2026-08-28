@@ -1,0 +1,6 @@
+{
+  "_todo": "Compilare da 'Investor Relations -> Annual Reports' di ciascuna azienda. Per ogni riga serve la citazione testuale esatta (metric_note) e il link alla pagina del bilancio (source_url). Finché è vuoto la pagina /industria mostra lo stato vuoto.",
+  "source_slug": "company-reports",
+  "companies": ["Rheinmetall AG", "Leonardo S.p.A.", "Thales", "BAE Systems"],
+  "metrics": []
+}

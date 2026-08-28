@@ -1,0 +1,112 @@
+[
+  {
+    "slug": "kiel",
+    "name": "Kiel Institute — Ukraine Support Tracker",
+    "kind": "dataset",
+    "url": "https://www.kielinstitut.de/publications/ukraine-support-tracker-data-6453",
+    "measures": "Aiuti militari, finanziari e umanitari annunciati e/o consegnati dai governi all'Ucraina dal 24 gennaio 2022, per paese, con distinzione tra impegnato/allocato/erogato.",
+    "estimates": "Per gli equipaggiamenti militari senza prezzo di mercato pubblico il valore è stimato al costo storico di sostituzione. Alcuni dati bilaterali sono preliminari.",
+    "methodology_note": "Copre governi del G7 e dell'UE. Include un working paper metodologico aggiornato periodicamente. È la fonte-spina-dorsale di questo portale per i totali per paese.",
+    "update_cadence": "circa bimestrale",
+    "last_updated": "2026-06-30"
+  },
+  {
+    "slug": "eu-fts",
+    "name": "European Commission — Financial Transparency System (FTS)",
+    "kind": "database",
+    "url": "https://ec.europa.eu/budget/financial-transparency-system/",
+    "measures": "Beneficiari diretti dei fondi del bilancio UE in gestione diretta/indiretta: nome del beneficiario, importo, scopo, anno.",
+    "estimates": null,
+    "methodology_note": "Export in CSV/XML. Non copre i fondi gestiti dagli Stati membri né le forniture militari bilaterali.",
+    "update_cadence": "annuale",
+    "last_updated": null
+  },
+  {
+    "slug": "ted",
+    "name": "Tenders Electronic Daily (TED) — Publications Office of the EU",
+    "kind": "registry",
+    "url": "https://ted.europa.eu/",
+    "measures": "Bandi e aggiudicazioni di appalti pubblici europei sopra soglia: aggiudicatario (sezione V.2.3) e valore finale del contratto (V.2.4).",
+    "estimates": null,
+    "methodology_note": "API strutturata + download bulk XML. Utile per contratti civili di ricostruzione e forniture.",
+    "update_cadence": "giornaliera",
+    "last_updated": null
+  },
+  {
+    "slug": "sipri",
+    "name": "SIPRI — Arms Transfers Database",
+    "kind": "database",
+    "url": "https://www.sipri.org/databases/armstransfers",
+    "measures": "Movimenti fisici di armi pesanti tra paesi (numero e tipo di sistemi trasferiti).",
+    "estimates": "I valori monetari usano l'indicatore SIPRI (TIV), non prezzi di vendita reali. Serve a sapere cosa è uscito quando i contratti sono secretati.",
+    "methodology_note": "Export 'Trade Register'. Nessuna API. Da incrociare con i rimborsi EPF e i bilanci aziendali.",
+    "update_cadence": "annuale",
+    "last_updated": null
+  },
+  {
+    "slug": "eu-council",
+    "name": "Consiglio dell'Unione Europea — European Peace Facility (EPF)",
+    "kind": "institutional",
+    "url": "https://www.consilium.europa.eu/en/policies/european-peace-facility/",
+    "measures": "Tranche EPF sbloccate per rimborsare gli Stati membri delle forniture militari all'Ucraina; dotazione del Ukraine Assistance Fund.",
+    "estimates": null,
+    "methodology_note": "L'UE non compra armi: rimborsa gli Stati. I comunicati indicano gli importi sbloccati, non le aziende beneficiarie.",
+    "update_cadence": "a evento",
+    "last_updated": null
+  },
+  {
+    "slug": "eu-commission",
+    "name": "European Commission — DG NEAR / Ukraine Facility / ASAP",
+    "kind": "institutional",
+    "url": "https://neighbourhood-enlargement.ec.europa.eu/european-neighbourhood-policy/countries-region/ukraine/eu-assistance-ukraine_en",
+    "measures": "Dotazioni e tranche della Ukraine Facility (50 mld €, 2024-2027) divise tra grant e loan; progetti finanziati dal programma ASAP.",
+    "estimates": null,
+    "methodology_note": "La Ukraine Facility è istituita dal Regolamento (UE) 2024/792. ASAP dal Regolamento (UE) 2023/1525.",
+    "update_cadence": "a evento",
+    "last_updated": null
+  },
+  {
+    "slug": "eurostat",
+    "name": "Eurostat",
+    "kind": "institutional",
+    "url": "https://ec.europa.eu/eurostat/web/lfs/database",
+    "measures": "Popolazione (demo_pjan), occupazione (lfsi_emp_a), contributi al bilancio UE per Stato.",
+    "estimates": null,
+    "methodology_note": "Usato per rendere confrontabili i denominatori pro-capite tra paesi.",
+    "update_cadence": "annuale",
+    "last_updated": null
+  },
+  {
+    "slug": "istat",
+    "name": "ISTAT",
+    "kind": "institutional",
+    "url": "https://www.istat.it/",
+    "measures": "Popolazione residente in Italia (bilancio demografico) e occupati (rilevazione sulle forze di lavoro).",
+    "estimates": null,
+    "methodology_note": "Fonte primaria per i denominatori italiani del calcolatore.",
+    "update_cadence": "mensile/trimestrale",
+    "last_updated": "2026-03-31"
+  },
+  {
+    "slug": "mef-df",
+    "name": "MEF — Dipartimento delle Finanze, statistiche sulle dichiarazioni",
+    "kind": "institutional",
+    "url": "https://www1.finanze.gov.it/finanze/analisi_stat/public/",
+    "measures": "Numero di contribuenti/dichiaranti IRPEF e reddito complessivo dichiarato, per anno d'imposta.",
+    "estimates": null,
+    "methodology_note": "Il totale 'contribuenti' include soggetti i cui dati sono acquisiti tramite Certificazione Unica senza dichiarazione diretta: la scomposizione è spiegata nel calcolatore.",
+    "update_cadence": "annuale",
+    "last_updated": null
+  },
+  {
+    "slug": "company-reports",
+    "name": "Bilanci e relazioni finanziarie delle aziende della difesa",
+    "kind": "report",
+    "url": "https://www.rheinmetall.com/en/company/investor-relations",
+    "measures": "Portafoglio ordini (order backlog), ricavi e loro variazione dichiarati agli azionisti.",
+    "estimates": null,
+    "methodology_note": "Fonte per la sezione 'Industria'. Ogni cifra è citata con la pagina esatta del documento.",
+    "update_cadence": "trimestrale/annuale",
+    "last_updated": null
+  }
+]

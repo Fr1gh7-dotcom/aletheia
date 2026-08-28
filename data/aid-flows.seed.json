@@ -1,0 +1,50 @@
+{
+  "_note": "Solo dotazioni legislative UE stabili e verificabili (fonte: EUR-Lex / Consiglio UE). I dati granulari per paese — bilaterali, militari, erogato effettivo — arrivano dall'import del dataset Kiel (scripts/import-kiel.ts). Ogni riga qui è 'committed' salvo diversa indicazione.",
+  "flows": [
+    {
+      "donor_slug": "eu-commission",
+      "instrument": "ukraine_facility",
+      "sector": "financial",
+      "finance_type": "loan",
+      "status": "committed",
+      "amount_eur": 33000000000,
+      "period_start": "2024-01-01",
+      "period_end": "2027-12-31",
+      "reliability_tier": "exact",
+      "source_slug": "eu-commission",
+      "source_ref": "reg-2024-792-loans",
+      "source_url": "https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX:32024R0792",
+      "notes": "Componente prestiti della Ukraine Facility (dotazione fino a 33 mld €), Regolamento (UE) 2024/792. Da restituire dall'Ucraina."
+    },
+    {
+      "donor_slug": "eu-commission",
+      "instrument": "ukraine_facility",
+      "sector": "reconstruction",
+      "finance_type": "grant",
+      "status": "committed",
+      "amount_eur": 17000000000,
+      "period_start": "2024-01-01",
+      "period_end": "2027-12-31",
+      "reliability_tier": "exact",
+      "source_slug": "eu-commission",
+      "source_ref": "reg-2024-792-grants",
+      "source_url": "https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX:32024R0792",
+      "notes": "Componente a fondo perduto della Ukraine Facility (dotazione ~17 mld €), Regolamento (UE) 2024/792."
+    },
+    {
+      "donor_slug": "eu-commission",
+      "instrument": "asap",
+      "sector": "military",
+      "finance_type": "grant",
+      "status": "committed",
+      "amount_eur": 500000000,
+      "period_start": "2023-07-01",
+      "period_end": "2025-06-30",
+      "reliability_tier": "exact",
+      "source_slug": "eu-commission",
+      "source_ref": "reg-2023-1525-asap",
+      "source_url": "https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX:32023R1525",
+      "notes": "Programma ASAP: sovvenzioni dirette all'industria europea per aumentare la produzione di munizioni. Regolamento (UE) 2023/1525."
+    }
+  ]
+}
