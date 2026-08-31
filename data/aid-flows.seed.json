@@ -1,5 +1,5 @@
 {
-  "_note": "Solo dotazioni legislative UE stabili e verificabili (fonte: EUR-Lex / Consiglio UE). I dati granulari per paese — bilaterali, militari, erogato effettivo — arrivano dall'import del dataset Kiel (scripts/import-kiel.ts). Ogni riga qui è 'committed' salvo diversa indicazione.",
+  "_note": "Dotazioni e flussi degli strumenti UE, da fonti istituzionali (EUR-Lex, Commissione, Consiglio). I dati granulari per paese — bilaterali, militari — arrivano dall'import Kiel (scripts/import-kiel.ts). Ogni riga indica esplicitamente status: 'committed' (dotazione legislativa), 'allocated' (stanziato nel Piano Ucraina) o 'disbursed' (versato dalla Commissione). La quota italiana è calcolata a valle moltiplicando per la chiave di contributo RNL (~12%).",
   "flows": [
     {
       "donor_slug": "eu-commission",
@@ -29,7 +29,7 @@
       "source_slug": "eu-commission",
       "source_ref": "reg-2024-792-grants",
       "source_url": "https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX:32024R0792",
-      "notes": "Componente a fondo perduto della Ukraine Facility (dotazione ~17 mld €), Regolamento (UE) 2024/792."
+      "notes": "Componente non-prestito della Ukraine Facility (~17 mld €): comprende il sostegno non rimborsabile del Pilastro I (5,27 mld), le garanzie e sovvenzioni del Pilastro II (~9,6 mld) e l'assistenza al Pilastro III. Regolamento (UE) 2024/792."
     },
     {
       "donor_slug": "eu-commission",
@@ -45,6 +45,128 @@
       "source_ref": "reg-2023-1525-asap",
       "source_url": "https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX:32023R1525",
       "notes": "Programma ASAP: sovvenzioni dirette all'industria europea per aumentare la produzione di munizioni. Regolamento (UE) 2023/1525."
+    },
+
+    {
+      "donor_slug": "eu-commission",
+      "instrument": "ukraine_facility",
+      "sector": "financial",
+      "finance_type": "loan",
+      "status": "allocated",
+      "amount_eur": 27000000000,
+      "period_start": "2024-01-01",
+      "period_end": "2027-12-31",
+      "reliability_tier": "exact",
+      "source_slug": "eu-commission",
+      "source_ref": "uf-plan-loan-allocated",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2024/792/oj",
+      "notes": "Componente prestiti stanziata nel Piano per l'Ucraina, approvato dalla Commissione il 15 aprile 2024: fino a 27 mld € di prestiti su 15 rate trimestrali 2024-2027 (art. 25, Reg. UE 2024/792). Il tetto di legge del Pilastro I è 33 mld: la differenza è oggetto delle revisioni successive del Piano (il Consiglio ha aggiunto oltre 8 mld per il 2026 il 30 luglio 2026, non ancora ripartiti qui)."
+    },
+    {
+      "donor_slug": "eu-commission",
+      "instrument": "ukraine_facility",
+      "sector": "financial",
+      "finance_type": "grant",
+      "status": "allocated",
+      "amount_eur": 5270000000,
+      "period_start": "2024-01-01",
+      "period_end": "2027-12-31",
+      "reliability_tier": "exact",
+      "source_slug": "eu-commission",
+      "source_ref": "uf-plan-grant-allocated",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2024/792/oj",
+      "notes": "Sostegno non rimborsabile del Pilastro I stanziato nel Piano per l'Ucraina: 5,27 mld € di sovvenzioni su 15 rate trimestrali 2024-2027 (art. 25, Reg. UE 2024/792), erogate dal bilancio UE tramite la Riserva per l'Ucraina."
+    },
+
+    {
+      "donor_slug": "eu-commission",
+      "instrument": "ukraine_facility",
+      "sector": "financial",
+      "finance_type": "loan",
+      "status": "disbursed",
+      "amount_eur": 13555000000,
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "reliability_tier": "aggregate_estimate",
+      "source_slug": "eu-commission",
+      "source_ref": "uf-disbursed-2024-loan",
+      "source_url": "https://enlargement.ec.europa.eu/funding-technical-assistance/ukraine-facility_en",
+      "notes": "Esborsi Ukraine Facility Pilastro I nel 2024: 16,2 mld € totali (ponte 4,5+1,5 mld mar/apr; pre-finanziamento 1,9 mld giu; 1ª rata 4,2 mld ago; 2ª rata 4,1 mld dic). Ripartizione prestito/sovvenzione stimata sulla proporzione del Piano (27 mld prestito : 5,27 mld sovvenzione = 83,7% prestito): la Commissione non pubblica lo split per singola rata."
+    },
+    {
+      "donor_slug": "eu-commission",
+      "instrument": "ukraine_facility",
+      "sector": "financial",
+      "finance_type": "grant",
+      "status": "disbursed",
+      "amount_eur": 2645000000,
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "reliability_tier": "aggregate_estimate",
+      "source_slug": "eu-commission",
+      "source_ref": "uf-disbursed-2024-grant",
+      "source_url": "https://enlargement.ec.europa.eu/funding-technical-assistance/ukraine-facility_en",
+      "notes": "Quota sovvenzione degli esborsi Ukraine Facility 2024 (16,33% di 16,2 mld), stimata sulla proporzione del Piano per l'Ucraina. Totale esborsi 2024 da comunicati Commissione; split prestito/sovvenzione non pubblicato per rata."
+    },
+    {
+      "donor_slug": "eu-commission",
+      "instrument": "ukraine_facility",
+      "sector": "financial",
+      "finance_type": "loan",
+      "status": "disbursed",
+      "amount_eur": 8869000000,
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "reliability_tier": "aggregate_estimate",
+      "source_slug": "eu-commission",
+      "source_ref": "uf-disbursed-2025-loan",
+      "source_url": "https://enlargement.ec.europa.eu/funding-technical-assistance/ukraine-facility_en",
+      "notes": "Esborsi Ukraine Facility Pilastro I nel 2025: 10,6 mld € totali (3ª rata 3,5 mld apr; 4ª rata 3,0 mld ago; 5ª rata 1,8 mld nov; 6ª rata 2,3 mld dic). Ripartizione prestito/sovvenzione stimata sulla proporzione del Piano (83,7% prestito)."
+    },
+    {
+      "donor_slug": "eu-commission",
+      "instrument": "ukraine_facility",
+      "sector": "financial",
+      "finance_type": "grant",
+      "status": "disbursed",
+      "amount_eur": 1731000000,
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "reliability_tier": "aggregate_estimate",
+      "source_slug": "eu-commission",
+      "source_ref": "uf-disbursed-2025-grant",
+      "source_url": "https://enlargement.ec.europa.eu/funding-technical-assistance/ukraine-facility_en",
+      "notes": "Quota sovvenzione degli esborsi Ukraine Facility 2025 (16,33% di 10,6 mld), stimata sulla proporzione del Piano per l'Ucraina."
+    },
+    {
+      "donor_slug": "eu-commission",
+      "instrument": "ukraine_facility",
+      "sector": "financial",
+      "finance_type": "loan",
+      "status": "disbursed",
+      "amount_eur": 2343000000,
+      "period_start": "2026-01-01",
+      "period_end": "2026-12-31",
+      "reliability_tier": "aggregate_estimate",
+      "source_slug": "eu-commission",
+      "source_ref": "uf-disbursed-2026-loan",
+      "source_url": "https://enlargement.ec.europa.eu/news/eu-disburses-nearly-eu28-billion-support-ukraines-financial-stability-and-reform-efforts-2026-06-08_en",
+      "notes": "Esborsi Ukraine Facility Pilastro I nel 2026 al 28 agosto: 7ª rata 2,8 mld € (8 giugno 2026). L'8ª rata è attesa a settembre 2026 e non è inclusa. Cumulato Pilastro I a giugno 2026: 29,5 mld €, ~77% dei fondi disponibili del Piano. Ripartizione prestito/sovvenzione stimata (83,7% prestito)."
+    },
+    {
+      "donor_slug": "eu-commission",
+      "instrument": "ukraine_facility",
+      "sector": "financial",
+      "finance_type": "grant",
+      "status": "disbursed",
+      "amount_eur": 457000000,
+      "period_start": "2026-01-01",
+      "period_end": "2026-12-31",
+      "reliability_tier": "aggregate_estimate",
+      "source_slug": "eu-commission",
+      "source_ref": "uf-disbursed-2026-grant",
+      "source_url": "https://enlargement.ec.europa.eu/news/eu-disburses-nearly-eu28-billion-support-ukraines-financial-stability-and-reform-efforts-2026-06-08_en",
+      "notes": "Quota sovvenzione della 7ª rata Ukraine Facility (16,33% di 2,8 mld), stimata sulla proporzione del Piano per l'Ucraina."
     }
   ]
 }
