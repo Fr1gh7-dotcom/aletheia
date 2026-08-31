@@ -1,19 +1,10 @@
-"use client";
-
-import dynamic from "next/dynamic";
 import type { SankeyGraph } from "@/lib/sankey";
-import { LazyOnView } from "./LazyOnView";
+import FlowsSankeyChart from "./FlowsSankeyChart";
 
-// recharts fuori dal bundle iniziale: caricato solo quando il grafico è in vista.
-const FlowsSankeyChart = dynamic(() => import("./FlowsSankeyChart"), {
-  ssr: false,
-  loading: () => (
-    <div className="flex h-[360px] items-center justify-center rounded-lg border border-line bg-bg-subtle text-sm text-ink-faint">
-      Grafico in caricamento…
-    </div>
-  ),
-});
-
+// Il Sankey è il contenuto principale di /flussi, quindi resa diretta (anche SSR:
+// l'SVG finisce nell'HTML — utile per screen reader, no-JS e indicizzazione).
+// Il layout è d3-sankey (~5 KB, sincrono): non serve il dynamic()+LazyOnView
+// usato per i grafici recharts, più pesanti e secondari.
 export function FlowsSankey({ graph }: { graph: SankeyGraph }) {
   if (!graph.nodes.length || !graph.links.length) {
     return (
@@ -22,9 +13,5 @@ export function FlowsSankey({ graph }: { graph: SankeyGraph }) {
       </div>
     );
   }
-  return (
-    <LazyOnView minHeight={Math.max(360, graph.nodes.length * 24)}>
-      <FlowsSankeyChart graph={graph} />
-    </LazyOnView>
-  );
+  return <FlowsSankeyChart graph={graph} />;
 }
