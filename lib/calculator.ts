@@ -44,7 +44,12 @@ export interface CalcResult {
   italyBilateralEur: number;
   euTotalAidEur: number;
   italyEuShareEur: number;
-  totalCostEur: number;
+  totalCostEur: number;             // bilaterale + quota UE, garanzie incluse
+  cashCostEur: number;              // totalCostEur meno le garanzie (base del pro-capite)
+
+  /** quanti flussi hanno effettivamente contribuito, per capire la copertura dello stato scelto */
+  italyFlowCount: number;
+  euFlowCount: number;
 
   grantEur: number;                 // sovvenzioni + in kind (non rimborsabili)
   loanEur: number;                  // prestiti (rimborsabili)
@@ -55,7 +60,8 @@ export interface CalcResult {
   netPerCapitaEur: number | null;
 
   bySector: Record<Sector, number>;
-  gniKeyYearsUsed: { year: number; pct: number; fallback: boolean }[];
+  /** una voce per ogni anno di flusso per cui è servita una chiave GNI */
+  gniKeyYearsUsed: { requestedYear: number; usedYear: number; pct: number; fallback: boolean }[];
   missingGniKeyYears: number[];
 }
 
@@ -127,8 +133,13 @@ export function calculate(inputs: CalcInputs, opts: CalcOptions): CalcResult {
   let italyBilateralEur = 0;
   let euTotalAidEur = 0;
   let italyEuShareEur = 0;
+  let italyFlowCount = 0;
+  let euFlowCount = 0;
 
-  const gniUsed = new Map<number, { year: number; pct: number; fallback: boolean }>();
+  const gniUsed = new Map<
+    number,
+    { requestedYear: number; usedYear: number; pct: number; fallback: boolean }
+  >();
   const missingGni = new Set<number>();
 
   const addBuckets = (ft: FinanceType, amount: number) => {
@@ -142,6 +153,7 @@ export function calculate(inputs: CalcInputs, opts: CalcOptions): CalcResult {
     if (!inRange(f)) continue;
 
     if (italySet.has(f.donor_id)) {
+      italyFlowCount++;
       italyBilateralEur += f.amount_eur;
       bySector[f.sector] += f.amount_eur;
       addBuckets(f.finance_type, f.amount_eur);
@@ -149,6 +161,7 @@ export function calculate(inputs: CalcInputs, opts: CalcOptions): CalcResult {
     }
 
     if (euSet.has(f.donor_id)) {
+      euFlowCount++;
       euTotalAidEur += f.amount_eur;
       const y = gniYearFor(f, yearTo);
       const key = pickGniKey(statsByYear, y);
@@ -156,10 +169,13 @@ export function calculate(inputs: CalcInputs, opts: CalcOptions): CalcResult {
         missingGni.add(y);
         continue;
       }
-      if (key.fallback && !gniUsed.has(y)) {
-        gniUsed.set(y, { year: key.usedYear, pct: key.pct, fallback: true });
-      } else if (!key.fallback) {
-        gniUsed.set(y, { year: y, pct: key.pct, fallback: false });
+      if (!gniUsed.has(y)) {
+        gniUsed.set(y, {
+          requestedYear: y,
+          usedYear: key.usedYear,
+          pct: key.pct,
+          fallback: key.fallback,
+        });
       }
       const share = f.amount_eur * (key.pct / 100);
       italyEuShareEur += share;
@@ -170,6 +186,9 @@ export function calculate(inputs: CalcInputs, opts: CalcOptions): CalcResult {
 
   const totalCostEur = italyBilateralEur + italyEuShareEur;
   const rate = Math.min(1, Math.max(0, expectedRepaymentRate));
+  // Le garanzie sono un'esposizione potenziale, non un esborso: fuori dal costo
+  // pro-capite (sia lordo sia netto). Restano visibili come voce a parte.
+  const cashCostEur = totalCostEur - guaranteeEur;
   const netCostEur = grantEur + loanEur * (1 - rate);
 
   const stats = statsByYear[yearTo] ?? statsByYear[Object.keys(statsByYear).map(Number).sort().pop() ?? yearTo];
@@ -181,7 +200,7 @@ export function calculate(inputs: CalcInputs, opts: CalcOptions): CalcResult {
   }
 
   const perCapitaEur =
-    denominatorValue && denominatorValue > 0 ? totalCostEur / denominatorValue : null;
+    denominatorValue && denominatorValue > 0 ? cashCostEur / denominatorValue : null;
   const netPerCapitaEur =
     denominatorValue && denominatorValue > 0 ? netCostEur / denominatorValue : null;
 
@@ -196,6 +215,9 @@ export function calculate(inputs: CalcInputs, opts: CalcOptions): CalcResult {
     euTotalAidEur,
     italyEuShareEur,
     totalCostEur,
+    cashCostEur,
+    italyFlowCount,
+    euFlowCount,
     grantEur,
     loanEur,
     guaranteeEur,
@@ -203,7 +225,7 @@ export function calculate(inputs: CalcInputs, opts: CalcOptions): CalcResult {
     perCapitaEur,
     netPerCapitaEur,
     bySector,
-    gniKeyYearsUsed: [...gniUsed.values()].sort((a, b) => a.year - b.year),
+    gniKeyYearsUsed: [...gniUsed.values()].sort((a, b) => a.requestedYear - b.requestedYear),
     missingGniKeyYears: [...missingGni].sort((a, b) => a - b),
   };
 }

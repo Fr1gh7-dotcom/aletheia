@@ -72,6 +72,9 @@ export function CalculatorClient({
         : denomSourceText?.taxpayers_source;
 
   const hasData = inputs.flows.length > 0;
+  const noStatusData = hasData && result.italyFlowCount === 0 && result.euFlowCount === 0;
+  const euMissingForStatus =
+    hasData && result.euFlowCount === 0 && result.italyFlowCount > 0 && status !== "committed";
 
   return (
     <div className="grid gap-6 lg:grid-cols-[19rem_1fr]">
@@ -160,9 +163,25 @@ export function CalculatorClient({
       {/* -------- risultati -------- */}
       <div className="space-y-5">
         {!hasData && (
-          <Callout tone="warn" title="Dati non ancora caricati">
-            Il database è vuoto: collega Supabase ed esegui <code>npm run data:all</code>.
-            I numeri qui sotto sono a zero.
+          <Callout tone="warn" title="Dati temporaneamente non disponibili">
+            I numeri non sono al momento raggiungibili: quelli qui sotto sono a zero.
+            Riprova tra qualche minuto.
+          </Callout>
+        )}
+
+        {noStatusData && (
+          <Callout tone="warn" title={`Nessun dato per lo stato «${STATUS_LABEL[status]}»`}>
+            Il dataset non copre ancora questo stato del flusso. Usa
+            «impegnato» per il quadro completo, oppure «allocato» per il solo bilaterale.
+          </Callout>
+        )}
+
+        {euMissingForStatus && (
+          <Callout tone="warn" title="Copertura parziale">
+            Per lo stato «{STATUS_LABEL[status]}» il dataset contiene solo gli aiuti{" "}
+            <strong>bilaterali</strong> (fonte Kiel). La quota degli strumenti UE
+            (Ukraine Facility, ASAP) è disponibile solo come «impegnato»: qui sotto è
+            esclusa, quindi il totale è una sottostima.
           </Callout>
         )}
 
@@ -180,6 +199,12 @@ export function CalculatorClient({
               {result.netPerCapitaEur != null ? fmtEur2(result.netPerCapitaEur) : "—"}
             </span>
           </div>
+          {result.guaranteeEur > 0 && (
+            <div className="mt-1 text-xs text-ink-faint">
+              garanzie escluse dal pro-capite: {fmtEurCompact(result.guaranteeEur)} (esposizione, non
+              esborso)
+            </div>
+          )}
           {result.denominatorValue != null && (
             <div className="mt-1 text-xs text-ink-faint">
               denominatore: {fmtNum(result.denominatorValue)} — {denomSource ?? "fonte da collegare"}
@@ -245,9 +270,9 @@ export function CalculatorClient({
             {result.gniKeyYearsUsed
               .filter((y) => y.fallback)
               .map((y) => (
-                <div key={y.year}>
-                  Per il {y.year} è stata usata la chiave dell&apos;anno {y.year} più vicino
-                  disponibile ({fmtPct(y.pct)}).
+                <div key={y.requestedYear}>
+                  Per il {y.requestedYear} è stata usata la chiave del {y.usedYear} (
+                  {fmtPct(y.pct)}), l&apos;anno disponibile più vicino.
                 </div>
               ))}
             {result.missingGniKeyYears.length > 0 && (

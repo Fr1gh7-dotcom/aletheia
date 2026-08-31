@@ -81,6 +81,27 @@ test("prestiti separati e costo netto con rimborso", () => {
   assert.ok(Math.abs((r.netPerCapitaEur ?? 0) - 125) < 0.01);
 });
 
+test("le garanzie sono fuori dal costo pro-capite ma restano visibili", () => {
+  const inputs: CalcInputs = {
+    ...base,
+    flows: [
+      flow({ donor_id: "IT", sector: "financial", finance_type: "grant", amount_eur: 1_000_000_000 }),
+      flow({ donor_id: "IT", sector: "financial", finance_type: "guarantee", amount_eur: 5_000_000_000 }),
+    ],
+  };
+  const r = calculate(inputs, {
+    yearFrom: 2022,
+    yearTo: 2026,
+    status: "committed",
+    denominator: "employed",
+    expectedRepaymentRate: 0,
+  });
+  assert.equal(r.totalCostEur, 6_000_000_000);
+  assert.equal(r.guaranteeEur, 5_000_000_000);
+  assert.equal(r.cashCostEur, 1_000_000_000); // solo il grant entra nel pro-capite
+  assert.ok(Math.abs((r.perCapitaEur ?? 0) - 1_000_000_000 / 24_000_000) < 0.01);
+});
+
 test("denominatore cambia il pro-capite", () => {
   const opts = {
     yearFrom: 2022,
@@ -102,4 +123,43 @@ test("filtro stato esclude i flussi di stato diverso", () => {
     expectedRepaymentRate: 0,
   });
   assert.equal(r.totalCostEur, 0);
+  assert.equal(r.italyFlowCount, 0);
+  assert.equal(r.euFlowCount, 0);
+});
+
+test("chiave GNI in fallback: una voce per anno richiesto, chiavi React uniche", () => {
+  const stat2024 = { ...base.statsByYear[2026], year: 2024, eu_gni_key_pct: 12 };
+  const inputs: CalcInputs = {
+    ...base,
+    flows: [
+      flow({ donor_id: "EU", sector: "financial", finance_type: "loan", amount_eur: 1e9, period_end: "2027-12-31" }),
+      flow({ donor_id: "EU", sector: "military", finance_type: "grant", amount_eur: 1e9, period_end: "2025-06-30" }),
+    ],
+    statsByYear: { 2024: stat2024 },
+  };
+  const r = calculate(inputs, {
+    yearFrom: 2022,
+    yearTo: 2026,
+    status: "committed",
+    denominator: "employed",
+    expectedRepaymentRate: 0,
+  });
+  // flussi che finiscono 2027 e 2025, nessuna stat oltre il 2024 → entrambi in
+  // fallback sul 2024. Prima del fix davano due <div key={2024}> (React warning).
+  const reqYears = r.gniKeyYearsUsed.map((y) => y.requestedYear);
+  assert.deepEqual([...new Set(reqYears)], reqYears, "requestedYear deve essere unico");
+  assert.ok(r.gniKeyYearsUsed.every((y) => y.usedYear === 2024));
+  assert.ok(r.gniKeyYearsUsed.some((y) => y.fallback));
+});
+
+test("conteggio flussi = copertura dello stato scelto", () => {
+  const r = calculate(base, {
+    yearFrom: 2022,
+    yearTo: 2026,
+    status: "committed",
+    denominator: "employed",
+    expectedRepaymentRate: 0,
+  });
+  assert.equal(r.italyFlowCount, 1);
+  assert.equal(r.euFlowCount, 2);
 });
