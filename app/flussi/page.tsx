@@ -14,7 +14,8 @@ export const metadata: Metadata = {
     "Sankey dei flussi di aiuto verso l'Ucraina: origine, strumento, settore, tipo di finanziamento. Colore per affidabilità del dato.",
 };
 
-export const revalidate = 3600;
+// Dinamico: rilegge i flussi da Supabase a ogni richiesta (vedi nota in app/page.tsx).
+export const dynamic = "force-dynamic";
 
 const INSTRUMENT_LABEL: Record<string, string> = {
   bilateral: "Bilaterale",
@@ -44,12 +45,17 @@ function groupBy(flows: AidFlow[], key: (f: AidFlow) => string) {
 }
 
 export default async function FlussiPage() {
-  const [flows, donors, sources] = await Promise.all([
+  const [allFlows, donors, sources] = await Promise.all([
     getAidFlows(),
     getDonors(),
     getSources(),
   ]);
   const srcById = Object.fromEntries(sources.map((s) => [s.id, s]));
+
+  // Il dataset contiene sia gli impegni (committed) sia gli stanziamenti
+  // (allocated): questa pagina mostra gli IMPEGNI, per non sommare le due serie.
+  // Il confronto impegnato/allocato/erogato è nel calcolatore.
+  const flows = allFlows.filter((f) => f.status === "committed");
   const graph = buildSankey(flows, donors);
 
   const byInstrument = groupBy(flows, (f) => f.instrument);
@@ -63,12 +69,20 @@ export default async function FlussiPage() {
       />
       <div className="mx-auto max-w-6xl space-y-8 px-5 py-8">
         {flows.length === 0 ? (
-          <Callout tone="warn" title="Nessun flusso in archivio">
-            Collega Supabase ed esegui <code>npm run data:all</code>. La struttura del
-            grafico è pronta.
+          <Callout tone="warn" title="Dati temporaneamente non disponibili">
+            I flussi non sono al momento raggiungibili. Riprova tra qualche minuto.
           </Callout>
         ) : (
           <>
+            <p className="text-sm text-ink-soft">
+              Vista sugli <strong>impegni</strong> (aiuti annunciati). Lo stanziato e
+              l&apos;erogato si confrontano nel{" "}
+              <a className="underline hover:text-ink" href="/calcolatore">
+                calcolatore
+              </a>
+              .
+            </p>
+
             <Panel>
               <FlowsSankey graph={graph} />
               <div className="mt-4 border-t border-line pt-3">

@@ -9,7 +9,8 @@ export const metadata: Metadata = {
     "Aziende che hanno ricevuto appalti e sussidi legati all'Ucraina (TED, EU FTS, ASAP), con il documento d'origine.",
 };
 
-export const revalidate = 3600;
+// Dinamico: rilegge da Supabase a ogni richiesta (vedi nota in app/page.tsx).
+export const dynamic = "force-dynamic";
 
 export default async function ContrattiPage() {
   const [contracts, contractors, sources] = await Promise.all([
@@ -28,35 +29,43 @@ export default async function ContrattiPage() {
       />
       <div className="mx-auto max-w-6xl space-y-6 px-5 py-8">
         {contracts.length === 0 ? (
-          <EmptyState title="Nessun contratto ancora caricato">
-            Le fonti da spogliare sono{" "}
-            <a
-              className="underline"
-              href="https://ted.europa.eu/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              TED
-            </a>
-            ,{" "}
-            <a
-              className="underline"
-              href="https://ec.europa.eu/budget/financial-transparency-system/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              EU FTS
-            </a>{" "}
-            e l&apos;elenco progetti{" "}
-            <a
-              className="underline"
-              href="https://defence-industry-space.ec.europa.eu/eu-defence-industry/act-support-ammunition-production-asap_en"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              ASAP
-            </a>
-            . Compilare <code>data/asap-awards.json</code> e rieseguire <code>npm run seed</code>.
+          <EmptyState title="In arrivo: i beneficiari, nome per nome">
+            <p>
+              Questa sezione raccoglierà le aziende che hanno ricevuto appalti civili e
+              sussidi diretti legati all&apos;Ucraina, ognuno con il link al bando o alla
+              decisione di aggiudicazione.
+            </p>
+            <p className="mt-2">
+              Le fonti sono pubbliche —{" "}
+              <a
+                className="underline"
+                href="https://ted.europa.eu/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                TED
+              </a>
+              ,{" "}
+              <a
+                className="underline"
+                href="https://ec.europa.eu/budget/financial-transparency-system/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                EU Financial Transparency System
+              </a>
+              , l&apos;elenco progetti{" "}
+              <a
+                className="underline"
+                href="https://defence-industry-space.ec.europa.eu/eu-defence-industry/act-support-ammunition-production-asap_en"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                ASAP
+              </a>{" "}
+              della Commissione — ma lo spoglio è manuale e verificato riga per riga.
+              Previsto entro l&apos;autunno 2026.
+            </p>
           </EmptyState>
         ) : (
           <Panel className="p-0">

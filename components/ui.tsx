@@ -45,11 +45,11 @@ export function EmptyState({
       <p className="font-medium text-ink">{title}</p>
       {children && <div className="mt-1 text-sm text-ink-soft">{children}</div>}
       <p className="mt-3 text-xs text-ink-faint">
-        Vedi{" "}
+        Metodologia e fonti:{" "}
         <Link href="/fonti" className="underline">
           Fonti e metodo
-        </Link>{" "}
-        per lo stato di caricamento dei dati.
+        </Link>
+        .
       </p>
     </Panel>
   );

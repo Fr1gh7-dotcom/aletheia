@@ -9,7 +9,8 @@ export const metadata: Metadata = {
     "Portafoglio ordini e ricavi dei grandi gruppi europei della difesa, citati direttamente dai loro bilanci.",
 };
 
-export const revalidate = 3600;
+// Dinamico: rilegge da Supabase a ogni richiesta (vedi nota in app/page.tsx).
+export const dynamic = "force-dynamic";
 
 // nota: importa "type IndustryPoint" da un componente client va bene (solo tipo).
 export default async function IndustriaPage() {
@@ -41,11 +42,17 @@ export default async function IndustriaPage() {
         </Callout>
 
         {metrics.length === 0 ? (
-          <EmptyState title="Serie storiche non ancora caricate">
-            Compilare <code>data/industry-metrics.json</code> con i dati di
-            &ldquo;Investor Relations → Annual Reports&rdquo; di Rheinmetall, Leonardo,
-            Thales e BAE Systems (portafoglio ordini, ricavi, citazione + link alla pagina
-            del bilancio), poi <code>npm run seed</code>.
+          <EmptyState title="In arrivo: gli ordini dell'industria della difesa">
+            <p>
+              Qui l&apos;andamento del portafoglio ordini e dei ricavi dei grandi gruppi
+              europei — Rheinmetall, Leonardo, Thales, BAE Systems — con la citazione
+              testuale dalla relazione finanziaria in cui l&apos;azienda stessa lega la
+              crescita degli ordini alla ricostituzione delle scorte.
+            </p>
+            <p className="mt-2">
+              I dati vengono dai bilanci ufficiali e dalle presentazioni agli investitori.
+              Previsto entro l&apos;autunno 2026.
+            </p>
           </EmptyState>
         ) : (
           <>

@@ -1,12 +1,15 @@
 import Link from "next/link";
 import { calculate } from "@/lib/calculator";
 import { buildCalcInputs, YEAR_MAX, YEAR_MIN } from "@/lib/calc-inputs";
-import { getAidFlows, getCountryStats, getDonors, isDbConfigured } from "@/lib/queries";
+import { getAidFlows, getCountryStats, getDonors } from "@/lib/queries";
 import { fmtEur2, fmtEurCompact } from "@/lib/format";
 import { Panel, Callout } from "@/components/ui";
 import { ReliabilityLegend } from "@/components/ReliabilityLegend";
 
-export const revalidate = 3600;
+// Le pagine leggono da Supabase, aggiornato fuori banda da `npm run seed`.
+// Reso dinamico: ogni richiesta rilegge i dati, così dopo un seed il sito è
+// subito aggiornato e non resta prigioniero della Data Cache tra un build e l'altro.
+export const dynamic = "force-dynamic";
 
 const SECTIONS = [
   {
@@ -102,10 +105,13 @@ export default async function HomePage() {
       {/* -------- stato dati -------- */}
       {!hasData && (
         <div className="mx-auto max-w-6xl px-5 pt-8">
-          <Callout tone="warn" title="Portale in allestimento">
-            Il database non è ancora collegato o è vuoto. La struttura è pronta: appena
-            caricato il dataset Kiel e le dotazioni UE, i numeri compaiono ovunque.
-            {isDbConfigured() ? " (Supabase configurato, tabelle vuote.)" : " (Supabase non configurato.)"}
+          <Callout tone="warn" title="Dati temporaneamente non disponibili">
+            I numeri non sono al momento raggiungibili. Riprova tra qualche minuto: la
+            metodologia e le fonti restano consultabili in{" "}
+            <Link href="/fonti" className="underline">
+              Fonti e metodo
+            </Link>
+            .
           </Callout>
         </div>
       )}

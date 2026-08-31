@@ -10,7 +10,8 @@ export const metadata: Metadata = {
     "Stima quanto è costato a un contribuente italiano il sostegno all'Ucraina, con denominatore selezionabile e prestiti separati dal fondo perduto.",
 };
 
-export const revalidate = 3600;
+// Dinamico: rilegge i flussi da Supabase a ogni richiesta (vedi nota in app/page.tsx).
+export const dynamic = "force-dynamic";
 
 export default async function CalcolatorePage() {
   const [flows, donors, stats] = await Promise.all([

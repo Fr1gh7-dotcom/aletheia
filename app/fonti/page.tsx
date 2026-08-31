@@ -16,7 +16,8 @@ export const metadata: Metadata = {
     "Ogni fonte usata da Aletheia: cosa misura, cosa stima, con quale cadenza si aggiorna. La formula del calcolatore e i limiti noti dei dati.",
 };
 
-export const revalidate = 3600;
+// Dinamico: rilegge da Supabase a ogni richiesta (vedi nota in app/page.tsx).
+export const dynamic = "force-dynamic";
 
 export default async function FontiPage() {
   const [sources, flows, contracts, stats, industry] = await Promise.all([
@@ -94,7 +95,7 @@ export default async function FontiPage() {
           <h2 className="text-lg font-semibold">Le fonti</h2>
           {sources.length === 0 && (
             <Callout tone="warn">
-              Elenco fonti non ancora caricato — <code>npm run seed</code>.
+              Elenco fonti temporaneamente non disponibile. Riprova tra qualche minuto.
             </Callout>
           )}
           <div className="space-y-4">
