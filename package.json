@@ -2,6 +2,9 @@
   "name": "aletheia",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,6 +12,7 @@
     "lint": "eslint",
     "type-check": "tsc --noEmit",
     "test": "tsx --test lib/*.test.ts",
+    "db:migrate": "tsx scripts/db-migrate.ts",
     "seed": "tsx scripts/seed.ts",
     "import:kiel": "tsx scripts/import-kiel.ts",
     "data:all": "npm run seed && npm run import:kiel"
@@ -16,6 +20,7 @@
   "dependencies": {
     "@supabase/ssr": "^0.12.5",
     "@supabase/supabase-js": "^2.109.0",
+    "d3-sankey": "^0.12.3",
     "next": "16.3.3",
     "react": "19.2.8",
     "react-dom": "19.2.8",
@@ -23,6 +28,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/d3-sankey": "^0.12.5",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
